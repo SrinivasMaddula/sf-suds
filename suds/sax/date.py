@@ -39,7 +39,7 @@ SNIPPET_ZONE = r'(?:(?P<tz_sign>[-+])(?P<tz_hour>\d{1,2})' + \
 
 PATTERN_DATE = r'^%s(?:%s)?$' % (SNIPPET_DATE, SNIPPET_ZONE)
 PATTERN_TIME = r'^%s(?:%s)?$' % (SNIPPET_TIME, SNIPPET_ZONE)
-PATTERN_DATETIME = r'^%s[T ]%s(?:%s)?$' % (SNIPPET_DATE, SNIPPET_TIME,
+PATTERN_DATETIME = r'^%s[T ]?%s(?:%s)?$' % (SNIPPET_DATE, SNIPPET_TIME,
                                            SNIPPET_ZONE)
 
 RE_DATE = re.compile(PATTERN_DATE)
@@ -194,6 +194,8 @@ class DateTime(object):
         @rtype: B{datetime}.I{datetime}
 
         """
+	if value.find('T')<0:
+	   value +='T00:00:00'
         match_result = RE_DATETIME.match(value)
         if match_result is None:
            raise ValueError('date data has invalid format "%s"' % (value, ))
