@@ -194,6 +194,8 @@ class DateTime(object):
         @rtype: B{datetime}.I{datetime}
 
         """
+	if value.find('T')<0:
+	   value +='T00:00:00'
         match_result = RE_DATETIME.match(value)
         if match_result is None:
            raise ValueError('date data has invalid format "%s"' % (value, ))
